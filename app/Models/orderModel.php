@@ -8,6 +8,7 @@
 
 class Order
 {
+    private $id;
     private $name;
     private $email;
     private $phonenumber;
@@ -43,8 +44,9 @@ class Order
         return $boolean;
     }
 
-    public function __construct($name, $email, $phonenumber, $conzert, $discount, $paystatus)
+    public function __construct($id, $name, $email, $phonenumber, $conzert, $discount, $paystatus)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->email = $email;
         $this->phonenumber = $phonenumber;
@@ -84,6 +86,19 @@ class Order
     public function setPaystatus()
     {
         $this->paystatus = !$this->paystatus;
+    }
+
+    public function editOrder()
+    {
+        $conn = core/connectToDatabase();
+
+        /*create statement*/
+        $stmt = $conn->prepare("use konsert_tickets; select * in from tickets_tab where id = ? ");
+
+        $stmt->bindParam(':NAME', $this->name, PDO::PARAM_STR);
+        $stmt->bindParam(':EMAIL', $this->email, PDO::PARAM_STR);
+        $stmt->bindParam(':PHONENUMBER', $this->phonenumber, PDO::PARAM_STR);
+        $stmt->bindParam(':CONZERT', $this->conzert, PDO::PARAM_STR);
     }
 }
 
