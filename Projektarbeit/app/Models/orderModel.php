@@ -67,7 +67,7 @@ class Order
             return "Error";
 
         /*create statement*/
-        $stmt = $conn->prepare("insert into konsert_tickets.tickets_tab() VALUES (:NAME, :EMAIL, :PHONENUMBER, :CONZERT, :DISCONNECT,:PAYSTATUS)");
+        $stmt = $conn->prepare("insert into konsert_tickets.tickets_tab(fk_id_concert, fk_id_discount, fk_id_status, name, email, phonenumber) VALUES (:CONZERT, :DISCOUNT,  :PAYSTATUS, :NAME, :EMAIL, :PHONENUMBER)");
 
         /*all binds need to do*/
         $stmt->bindParam(':NAME', $this->name, PDO::PARAM_STR);

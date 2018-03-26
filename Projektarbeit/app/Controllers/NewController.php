@@ -1,7 +1,7 @@
 <?php
 require_once 'app/Models/getModel.php';
 
-const TEMPLATE ="<option value=\"?value\">?value</option>";
+const TEMPLATE ="<option value=\"?index\">?value</option>";
 
 function getHtml($query)
 {
@@ -13,7 +13,8 @@ function getHtml($query)
         foreach ($data["{$i}"] as $key => $value)
         {
             $val = $data["{$i}"]["{$key}"];
-            $html .=  str_replace("?value", $val, TEMPLATE);
+            $temp =  str_replace("?value", $val, str_replace("?index", $i, TEMPLATE));
+            $html .= $temp;
         }
     }
 

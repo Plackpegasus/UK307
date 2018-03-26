@@ -11,26 +11,23 @@ CREATE TABLE `concert_tab` (
 	PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `customer_tab` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-	`name` varchar(255) NOT NULL,
-	PRIMARY KEY (`id`)
-);
-
 CREATE TABLE `tickets_tab` (
-	`fk_id_customer` INT NOT NULL,
+	`id` INT NOT NULL AUTO_INCREMENT,
 	`fk_id_concert` INT NOT NULL,
-	`amount` INT NOT NULL,
 	`fk_id_discount` INT NOT NULL,
 	`fk_id_status` INT NOT NULL,
-	`buy_date` DATETIME NOT NULL,
-	PRIMARY KEY (`fk_id_customer`,`fk_id_concert`)
+	`buy_date` TIMESTAMP NOT NULL,
+	`name` varchar(64) NOT NULL,
+	`email` varchar(64) NOT NULL,
+	`phonenumber` varchar(24) NOT NULL,
+	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `discount_tab` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-	`discount` FLOAT NOT NULL,
+	`discount` INT NOT NULL,
 	`deadline` INT NOT NULL,
+	`text` varchar(64) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -40,13 +37,11 @@ CREATE TABLE `status_tab` (
 	PRIMARY KEY (`id`)
 );
 
-ALTER TABLE `tickets_tab` ADD CONSTRAINT `tickets_tab_fk0` FOREIGN KEY (`fk_id_customer`) REFERENCES `customer_tab`(`id`);
+ALTER TABLE `tickets_tab` ADD CONSTRAINT `tickets_tab_fk0` FOREIGN KEY (`fk_id_concert`) REFERENCES `concert_tab`(`id`);
 
-ALTER TABLE `tickets_tab` ADD CONSTRAINT `tickets_tab_fk1` FOREIGN KEY (`fk_id_concert`) REFERENCES `concert_tab`(`id`);
+ALTER TABLE `tickets_tab` ADD CONSTRAINT `tickets_tab_fk1` FOREIGN KEY (`fk_id_discount`) REFERENCES `discount_tab`(`id`);
 
-ALTER TABLE `tickets_tab` ADD CONSTRAINT `tickets_tab_fk2` FOREIGN KEY (`fk_id_discount`) REFERENCES `discount_tab`(`id`);
-
-ALTER TABLE `tickets_tab` ADD CONSTRAINT `tickets_tab_fk3` FOREIGN KEY (`fk_id_status`) REFERENCES `status_tab`(`id`);
+ALTER TABLE `tickets_tab` ADD CONSTRAINT `tickets_tab_fk2` FOREIGN KEY (`fk_id_status`) REFERENCES `status_tab`(`id`);
 
 
 
@@ -137,3 +132,9 @@ INSERT INTO `concert_tab` (`id`, `name`) VALUES
 (84, 'Bob Marley'),
 (85, 'Depeche Mode'),
 (86, 'Aretha Franklin');
+
+ALTER TABLE tickets_tab MODIFY buy_date TIMESTAMP DEFAULT now();
+INSERT into discount_tab (discount, deadline, text) VALUES (0, 30, 'kein Rabatt');
+INSERT INTO discount_tab (discount, deadline, text) VALUES (-10, 20, '5 % Rabatt');
+INSERT INTO discount_tab (discount, deadline, text) VALUES (-15, 15, '10 % Rabatt');
+INSERT INTO discount_tab (discount, deadline, text) VALUES (-20, 10, '15 % Rabatt');
