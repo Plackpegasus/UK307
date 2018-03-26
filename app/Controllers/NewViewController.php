@@ -1,11 +1,11 @@
 <?php
 
-require_once 'app/Models/generaicModel.php';
+require_once 'app/Models/Generic.php';
 
-require_once 'app/Models/concertModel.php';
+require_once 'app/Models/Concert.php';
 
-require_once 'app/Models/procentModel.php';
-require_once 'app/Controllers/ProcentController.php';
+require_once 'app/Models/Discount.php';
+require_once 'app/Controllers/DiscountController.php';
 
 require_once 'app/Controllers/NewViewRenderController.php';
 require_once 'app/Views/new.view.render.php';

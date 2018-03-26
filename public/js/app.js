@@ -1,6 +1,3 @@
-// Javascript
-console.info('JS geladen.');
-
 $(function() {
 
     $('#create-order').on('submit', function () {
@@ -30,5 +27,3 @@ $('#prozent').on('change', function() {
     var date = new Date(Date.now() + datediff);
     $('#time-to-pay').text(" " + date.getDate() +  "." + (date.getMonth()+1) + "." + date.getFullYear());
 })
-
-

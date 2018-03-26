@@ -138,3 +138,6 @@ INSERT into discount_tab (discount, deadline, text) VALUES (0, 30, 'kein Rabatt'
 INSERT INTO discount_tab (discount, deadline, text) VALUES (-10, 20, '5 % Rabatt');
 INSERT INTO discount_tab (discount, deadline, text) VALUES (-15, 15, '10 % Rabatt');
 INSERT INTO discount_tab (discount, deadline, text) VALUES (-20, 10, '15 % Rabatt');
+
+INSERT INTO status_tab VALUES(1,'NICHT BEZAHLT');
+INSERT INTO status_tab VALUES(2,'BEZAHLT');

@@ -2,5 +2,6 @@
 
 function getConzertName()
 {
-    return getAllData(SELECTS["DROPDOWN"]["GETNAME"]);
+    return getAllData(SELECTS_CONCERT["DROPDOWN"]["GETNAME"]);
 }
+

@@ -40,7 +40,7 @@
                     <div>
                         <label>Prozente:</label>
                         <select id="prozent" name="procends" required autofocus>
-                            <?php echo getRenderdHtml(getProcentText());?>
+                            <?php echo getRenderdHtml(getDiscountText());?>
                         </select>
                     </div>
                     <div>
