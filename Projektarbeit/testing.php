@@ -125,8 +125,8 @@ function testDoesDbExist()
 
 function testDoesContentTableExist()
 {
-    $result = executeQuery("SHOW TABLES like ?", array(CONFIG["nameOfContentTable"]));
-    if ($result["count"] == 1) {
+    $result = executeQuery("SELECT COUNT(table_name) AS count FROM information_schema.tables WHERE TABLE_NAME = ?;", array(CONFIG["nameOfContentTable"]));
+	if ($result["count"] == 1) {
         okMessage("Your content table <samp>" . CONFIG["nameOfContentTable"] . "</samp> was found in the database.");
     } else {
         notOkMessage("Your content table <samp>" . CONFIG["nameOfContentTable"] . "</samp> could not be found in the database.");
