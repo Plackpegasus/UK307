@@ -44,13 +44,13 @@
                     <div>
                         <label>Prozente:</label>
                         <select id="prozent" name="procends" required autofocus>
-                            <?php echo getHtml("SELECT t.discount from konsert_tickets.discount_tab t;");?>
+                            <?php echo getRenderdHtml(getProcentText());?>
                         </select>
                     </div>
                     <div>
                         <label>Konzert:</label>
                         <select id="conzertds" name="conzertds" required autofocus>
-                            <?php echo getHtml("SELECT t.name from konsert_tickets.concert_tab t ORDER BY t.name");?>
+                            <?php  echo getRenderdHtml(getConzertName());?>
                         </select>
                     </div><br>
                     <div>

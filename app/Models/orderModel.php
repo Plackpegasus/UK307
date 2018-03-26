@@ -29,7 +29,7 @@ class Order
     private function vailedName()
     {
         $boolean = FALSE;
-        if($this->name !== "")
+        if($this->name === "" or (strlen($this->name) <= 2))
             $boolean = TRUE;
 
         return $boolean;
@@ -38,13 +38,43 @@ class Order
     private function vailedEmail()
     {
         $boolean = FALSE;
-        if($this->email !== "")
+        if($this->email === "")
             $boolean = TRUE;
 
         return $boolean;
     }
 
-    public function __construct($id, $name, $email, $phonenumber, $conzert, $discount, $paystatus)
+    private function vailedConzert()
+    {
+        $boolean = FALSE;
+
+        $conn = connectToDatabase();
+        $stmt = $conn->prepare('SELECT * from concert_tab t WHERE t.name = :conzert;');
+
+        $stmt->bindParam(':conzert', $this->conzert);
+        if(is_null($stmt->fetch()))
+            $boolean = TRUE;
+
+        return $boolean;
+    }
+
+    private function vailedDiscount()
+    {
+        $boolean = FALSE;
+
+        $conn = connectToDatabase();
+        $stmt = $conn->prepare('SELECT * from discount_tab t WHERE t.id = :discount;');
+
+        $stmt->bindParam(':discount', $this->conzert);
+        if(is_null($stmt->fetch()))
+        {
+            $boolean = TRUE;
+        }
+
+        return $boolean;
+    }
+
+    public function __construct($id, $name, $email, $phonenumber, $conzert, $discount, $paystatus = 1)
     {
         $this->id = $id;
         $this->name = $name;
@@ -57,30 +87,36 @@ class Order
 
     public function createOrder()
     {
-        $conn = core/connectToDatabase();
+        $conn = connectToDatabase();
 
         /*check if it is all vailed*/
-        $boolean = FALSE;
+        $boolean = TRUE;
 
         $boolean = $this->vailedName();
+        if($boolean === TRUE)
+            return 0;
         $boolean = $this->vailedEmail();
-
-        if($boolean === FALSE)
-            return "Error";
+        if($boolean === TRUE)
+            return 0;
+        $boolean = $this->vailedConzert();
+        if($boolean === TRUE)
+            return 0;
+        $boolean = $this->vailedDiscount();
+        if($boolean === TRUE)
+            return 0;
 
         /*create statement*/
-        $stmt = $conn->prepare("insert into konsert_tickets.tickets_tab(fk_id_concert, fk_id_discount, fk_id_status, name, email, phonenumber) VALUES (:CONZERT, :DISCOUNT,  :PAYSTATUS, :NAME, :EMAIL, :PHONENUMBER)");
+        $stmt = $conn->prepare('insert into konsert_tickets.tickets_tab (fk_id_concert, fk_id_discount, fk_id_status, name, email, phonenumber) VALUES (:conzert, :discount,  :paystatus, :name, :email, :phonenumber)');
 
         /*all binds need to do*/
-        $stmt->bindParam(':NAME', $this->name, PDO::PARAM_STR);
-        $stmt->bindParam(':EMAIL', $this->email, PDO::PARAM_STR);
-        $stmt->bindParam(':PHONENUMBER', $this->phonenumber, PDO::PARAM_STR);
-        $stmt->bindParam(':CONZERT', $this->conzert, PDO::PARAM_STR);
-        $stmt->bindParam(':DISCONNECT', $this->discount, PDO::PARAM_INT);
-        $stmt->bindParam(':PAYSTATUS', $this->paystatus, PDO::PARAM_BOOL);
+        $stmt->bindParam(':name', $this->name);
+        $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':phonenumber', $this->phonenumber);
+        $stmt->bindParam(':conzert', $this->conzert);
+        $stmt->bindParam(':discount', $this->discount);
+        $stmt->bindParam(':paystatus', $this->paystatus);
 
         $stmt->execute();
-
     }
 
     public function setPaystatus()
