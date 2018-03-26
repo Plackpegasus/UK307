@@ -1,6 +1,6 @@
 <?php
 
-print_r($_POST);
-$o = new Order($_POST["user-email"], $_POST["user-email"], $_POST["user-phonenumber"], $_POST["conzertds"], $_POST["procends"], FALSE);
+$o = new Order($_POST["user-email"], $_POST["user-email"], $_POST["user-phonenumber"], $_POST["conzertds"], $_POST["procends"], 1);
 $o->createOrder();
-echo "OK";
+
+//header("Location: NEW");

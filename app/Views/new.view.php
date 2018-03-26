@@ -22,7 +22,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <form id="create-order" action="ORDER" method="post">
+            <form id="create-order" action="NEWORDER" method="post">
                 <fieldset>
                     <legend>Eintrag erstellen</legend>
                     <div>

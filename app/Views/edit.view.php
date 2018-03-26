@@ -22,41 +22,41 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <form id="create-order" action="NEWORDER" method="post">
+            <form id="create-order" action="" method="post">
                 <fieldset>
                     <legend>Eintrag bearbeiten</legend>
-                    <div>
-                        <label for="user-id">ID:</label>
-                        <input name="user-id" type="number">
-                    </div><br>
-                    <div>
-                        <label for="user-name">Name:</label>
-                        <input name="user-name" type="text" placeholder="" required autofocus>
-                    </div>
-                    <div>
-                        <label for="user-email">Email-Addresse:</label>
-                        <input id="user-email" name="user-email" type="email" placeholder="" required autofocus>
-                    </div>
-                    <div>
-                        <label for="user-phonenumber">Telephonenummer:</label>
-                        <input name="user-phonenumber" type="text" placeholder="">
-                    </div>
-                    <div>
-                        <label>Prozente:</label>
-                        <select id="prozent" name="procends" required autofocus>
-                            <?php echo getRenderdHtml(getProcentText());?>
-                        </select>
-                    </div>
-                    <div>
-                        <label>Konzert:</label>
-                        <select id="conzertds" name="conzertds" required autofocus>
-                            <?php  echo getRenderdHtml(getConzertName());?>
-                        </select>
-                    </div><br>
-                    <div>
-                        <label for="time-to-pay">Zahlung bis:</label><b><a id="time-to-pay"></a></b>
-                        <br><input name="create" type="submit" value="Erstellen">
-                    </div>
+                    <table>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">CONSCERT</th>
+                            <th scope="col">DISCOUNT</th>
+                            <th scope="col">STATUS</th>
+                            <th scope="col">BUY-DATE</th>
+                            <th scope="col">NAME</th>
+                            <th scope="col">EMAIL</th>
+                            <th scope="col">PHONENUMBER</th>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>2</td>
+                            <td>10</td>
+                            <td>500</td>
+                            <td>5</td>
+                            <td>2</td>
+                            <td>10</td>
+                            <td>500</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>2</td>
+                            <td>10</td>
+                            <td>500</td>
+                            <td>5</td>
+                            <td>2</td>
+                            <td>10</td>
+                            <td>500</td>
+                        </tr>
+                    </table>
                 </fieldset>
             </form>
         </div>

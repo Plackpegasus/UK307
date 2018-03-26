@@ -16,16 +16,6 @@ class Order
     private $discount;
     private $paystatus;
 
-    /**
-     * Order constructor.
-     * @param $name
-     * @param $email
-     * @param $phonenumber
-     * @param $conzert
-     * @param $discount
-     * @param $paystatus
-     */
-
     private function vailedName()
     {
         $boolean = FALSE;
@@ -74,9 +64,9 @@ class Order
         return $boolean;
     }
 
-    public function __construct($id, $name, $email, $phonenumber, $conzert, $discount, $paystatus = 1)
+    public function __construct( $name, $email, $phonenumber, $conzert, $discount, $paystatus = 1)
     {
-        $this->id = $id;
+        //$this->id = $id;
         $this->name = $name;
         $this->email = $email;
         $this->phonenumber = $phonenumber;
@@ -92,6 +82,7 @@ class Order
         /*check if it is all vailed*/
         $boolean = TRUE;
 
+        /*
         $boolean = $this->vailedName();
         if($boolean === TRUE)
             return 0;
@@ -104,7 +95,7 @@ class Order
         $boolean = $this->vailedDiscount();
         if($boolean === TRUE)
             return 0;
-
+*/
         /*create statement*/
         $stmt = $conn->prepare('insert into konsert_tickets.tickets_tab (fk_id_concert, fk_id_discount, fk_id_status, name, email, phonenumber) VALUES (:conzert, :discount,  :paystatus, :name, :email, :phonenumber)');
 
@@ -124,17 +115,35 @@ class Order
         $this->paystatus = !$this->paystatus;
     }
 
-    public function editOrder()
+    public function update()
     {
-        $conn = core/connectToDatabase();
+        $conn = connectToDatabase();
 
-        /*create statement*/
-        $stmt = $conn->prepare("use konsert_tickets; select * in from tickets_tab where id = ? ");
+        /*check if it is all vailed*/
+        $boolean = TRUE;
 
-        $stmt->bindParam(':NAME', $this->name, PDO::PARAM_STR);
-        $stmt->bindParam(':EMAIL', $this->email, PDO::PARAM_STR);
-        $stmt->bindParam(':PHONENUMBER', $this->phonenumber, PDO::PARAM_STR);
-        $stmt->bindParam(':CONZERT', $this->conzert, PDO::PARAM_STR);
+        $boolean = $this->vailedName();
+        if($boolean === TRUE)
+            return 0;
+        $boolean = $this->vailedEmail();
+        if($boolean === TRUE)
+            return 0;
+        $boolean = $this->vailedConzert();
+        if($boolean === TRUE)
+            return 0;
+        $boolean = $this->vailedDiscount();
+        if($boolean === TRUE)
+            return 0;
+
+        $stmt = $conn->prepare('update konsert_tickets.tickets_tab (fk_id_concert, fk_id_discount, fk_id_status, name, email, phonenumber) VALUES (:conzert, :discount,  :paystatus, :name, :email, :phonenumber)');
+
+        /*all binds need to do*/
+        $stmt->bindParam(':name', $this->name);
+        $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':phonenumber', $this->phonenumber);
+        $stmt->bindParam(':conzert', $this->conzert);
+        $stmt->bindParam(':discount', $this->discount);
+        $stmt->bindParam(':paystatus', $this->paystatus);
     }
 }
 
