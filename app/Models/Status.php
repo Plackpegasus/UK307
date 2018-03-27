@@ -6,6 +6,10 @@
  * Time: 20:10
  */
 
+const SELECTS_STATUS = ["GET" => ["STATUSTBYID" => "SELECT t.status from konsert_tickets.status_tab t WHERE t.id = :id"],
+    "INSERT" => ["CHANGESTATUSIDBYORDERID"=> "update konsert_tickets.tickets_tab set fk_id_status = :fk WHERE id = :id"]
+    ];
+
 class Status
 {
     private $id;
@@ -20,6 +24,17 @@ class Status
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    public function setStatusById()
+    {
+        $data = getFirstColumn(str_replace(":id", $this->id, SELECTS_STATUS["GET"]["STATUSTBYID"]));
+        $this->status = $data;
     }
 
     public function getStatus()

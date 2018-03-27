@@ -22,8 +22,8 @@ $(function() {
     });
 });
 
-$('#prozent').on('change', function() {
-    var datediff = (30 + parseInt($('#prozent').val()))*24*3600*1000;
+$('#discount').on('change', function() {
+    var datediff = (30 + parseInt($('#discount').val()))*24*3600*1000;
     var date = new Date(Date.now() + datediff);
     $('#time-to-pay').text(" " + date.getDate() +  "." + (date.getMonth()+1) + "." + date.getFullYear());
-})
+});

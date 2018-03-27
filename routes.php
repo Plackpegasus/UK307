@@ -3,9 +3,10 @@
 $router = new Router();
 
 $router->define([
-    '' => 'app/Controllers/WelcomeController.php',
-    'NEW' => 'app/Controllers/NewViewController.php',
-    'NEWORDER' => 'app/Controllers/OrderController.php',
-    'EDIT' => 'app/Controllers/EditController.php',
-    'ORDER' => 'app/Controllers/OrderController.php'
+    '' => 'app/Controllers/DashboardController.php',
+    'NEW' => 'app/Controllers/NewOrderController.php',
+    'ORDER' => 'app/Controllers/CreateOrderController.php',
+    'VIEW' => 'app/Controllers/ViewController.php',
+    'CHANGE' => 'app/Controllers/ChangeController.php',
+    'EDIT' => 'app/Controllers/EditController.php'
 ]);

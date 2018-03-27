@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Bearbeiten</title>
+    <title>Anzeigen</title>
     <link rel="stylesheet" href="public/css/app.css">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
@@ -17,29 +17,31 @@
 
 </head>
 <body>
+
 <!-- Main !-->
 <div class="container">
     <div class="row">
         <div class="col">
-            <form id="create-order" action="EDIT" method="post">
+            <form id="create-order" action="CHANGE" method="post">
                 <fieldset>
-                    <legend>Eintrag bearbeiten</legend>
+                    <legend>Eintrag Ansehen</legend>
                     <table>
                         <tr>
-                            <th scope="col">ID:</th>
-                            <th scope="col">NAME:</th>
-                            <th scope="col">EMAIL:</th>
-                            <th scope="col">TELEFON:</th>
-                            <th scope="col">KONZERT:</th>
-                            <th scope="col">Zahlungs-Status:</th>
-                            <th scope="col">BUY-DATE</th>
+                            <th scope="col">Name:</th>
+                            <th scope="col">Email:</th>
+                            <th scope="col">Konsert:</th>
+                            <th scope="col">Entdatum:</th>
+                            <th scope="col">Check:</th>
                         </tr>
-                        <?php  echo renderEditTable(); ?>
+                        <?php echo renderViewTable();?>
                     </table>
+                    <button type="submit" id="change">Change</button>
                 </fieldset>
             </form>
         </div>
     </div>
 </div>
+
+
 </body>
 </html>

@@ -6,187 +6,114 @@
  * Time: 20:06
  */
 
+const SELECTS_ORDER = ["CONSTRUCTOR" => ["ALL" => "SELECT * from konsert_tickets.tickets_tab t ORDER BY t.id",
+                                        "VIEW" => "SELECT * from konsert_tickets.tickets_tab t WHERE  t.fk_id_status = 1 ORDER BY t.buy_date"]];
+
 class Order
 {
     private $id;
-    private $name;
-    private $email;
-    private $phonenumber;
-    private $conzert;
-    private $discount;
-    private $paystatus;
+    private $Person;
+    private $Consert;
+    private $Discount;
+    private $Status;
 
-    private function vailedConzert()
-    {
-        $boolean = FALSE;
-
-        $conn = connectToDatabase();
-        $stmt = $conn->prepare('SELECT * from concert_tab t WHERE t.name = :conzert;');
-
-        $stmt->bindParam(':conzert', $this->conzert);
-        if(is_null($stmt->fetch()))
-            $boolean = TRUE;
-
-        return $boolean;
-    }
-
-    private function vailedDiscount()
-    {
-        $boolean = FALSE;
-
-        $conn = connectToDatabase();
-        $stmt = $conn->prepare('SELECT * from discount_tab t WHERE t.id = :discount;');
-
-        $stmt->bindParam(':discount', $this->conzert);
-        if(is_null($stmt->fetch()))
-        {
-            $boolean = TRUE;
-        }
-
-        return $boolean;
-    }
-
-    public function __construct($id = null, $name = null, $email = null, $phonenumber = null, $conzert = null, $discount = null, $paystatus = null)
+    public function __construct($id = null, $Person = null, $Consert = null, $Discount = null, $Status = null)
     {
         $this->id = $id;
-        $this->name = $name;
-        $this->email = $email;
-        $this->phonenumber = $phonenumber;
-        $this->conzert = $conzert;
-        $this->discount = $discount;
-        $this->paystatus = $paystatus ?? 1;
+        $this->Person = $Person;
+        $this->Consert = $Consert;
+        $this->Discount = $Discount;
+        $this->Status = $Status;
     }
 
     public function createOrder()
     {
         $conn = connectToDatabase();
 
-        /*check if it is all vailed*/
-        $boolean = TRUE;
-
-        /*
-        $boolean = $this->vailedName();
-        if($boolean === TRUE)
-            return 0;
-        $boolean = $this->vailedEmail();
-        if($boolean === TRUE)
-            return 0;
-        $boolean = $this->vailedConzert();
-        if($boolean === TRUE)
-            return 0;
-        $boolean = $this->vailedDiscount();
-        if($boolean === TRUE)
-            return 0;
-*/
         /*create statement*/
-        $stmt = $conn->prepare('insert into konsert_tickets.tickets_tab (fk_id_concert, fk_id_discount, fk_id_status, name, email, phonenumber) VALUES (:conzert, :discount,  :paystatus, :name, :email, :phonenumber)');
+        $stmt = $conn->prepare('insert into konsert_tickets.tickets_tab (fk_id_concert, fk_id_discount, fk_id_status, name, email, phonenumber) VALUES (:consert, :discount,  :status, :name, :email, :phonenumber)');
 
         /*all binds need to do*/
-        $stmt->bindParam(':name', $this->name);
-        $stmt->bindParam(':email', $this->email);
-        $stmt->bindParam(':phonenumber', $this->phonenumber);
-        $stmt->bindParam(':conzert', $this->conzert);
-        $stmt->bindParam(':discount', $this->discount);
-        $stmt->bindParam(':paystatus', $this->paystatus);
+        $stmt->bindParam(':name', $this->Person->getName());
+        $stmt->bindParam(':email', $this->Person->getEmail());
+        $stmt->bindParam(':phonenumber', $this->Person->getPhonenumber());
+        $stmt->bindParam(':consert', $this->Consert->getId());
+        $stmt->bindParam(':discount', $this->Discount->getId());
+        $stmt->bindParam(':status', $this->Status->getId());
 
         $stmt->execute();
-    }
-
-    public function setPaystatus()
-    {
-        $this->paystatus = !$this->paystatus;
-    }
-
-    public static function getAllTickets()
-    {
-        return getAllData(SELECTS_TICKETS["ALL"]["GETTICKETS"]);
     }
 
     public function update()
     {
         $conn = connectToDatabase();
 
-        /*check if it is all vailed*/
-        $boolean = TRUE;
+        $stmt = $conn->prepare('update konsert_tickets.tickets_tab set name = :name, email= :email, phonenumber = :phonenumber,  fk_id_concert = :concert, fk_id_status = :status WHERE id = :id;');
 
-        $boolean = $this->vailedName();
-        if($boolean === TRUE)
-            return 0;
-        $boolean = $this->vailedEmail();
-        if($boolean === TRUE)
-            return 0;
-        $boolean = $this->vailedConzert();
-        if($boolean === TRUE)
-            return 0;
-        $boolean = $this->vailedDiscount();
-        if($boolean === TRUE)
-            return 0;
-
-        $stmt = $conn->prepare('update konsert_tickets.tickets_tab (fk_id_concert, fk_id_discount, fk_id_status, name, email, phonenumber) VALUES (:conzert, :discount,  :paystatus, :name, :email, :phonenumber)');
+        $name = $this->Person->getName();
+        $email = $this->Person->getEmail();
+        $phonenumber = $this->Person->getPhonenumber();
+        $cid= $this->Consert->getId();
+        $sid = $this->Status->getId();
 
         /*all binds need to do*/
-        $stmt->bindParam(':name', $this->name);
-        $stmt->bindParam(':email', $this->email);
-        $stmt->bindParam(':phonenumber', $this->phonenumber);
-        $stmt->bindParam(':conzert', $this->conzert);
-        $stmt->bindParam(':discount', $this->discount);
-        $stmt->bindParam(':paystatus', $this->paystatus);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':phonenumber', $phonenumber);
+        $stmt->bindParam(':concert', $cid);
+        $stmt->bindParam(':status', $sid);
+
+        $stmt->bindParam(':id', $this->id);
+
+        $stmt->execute();
     }
 
-    /**
-     * @return mixed
-     */
+    public static function changeStatusIdByOrderId($id, $fk)
+    {
+        $conn = connectToDatabase();
+        $stmt = $conn->prepare(SELECTS_STATUS["INSERT"]["CHANGESTATUSIDBYORDERID"]);
+
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':fk', $fk);
+
+        $stmt->execute();
+    }
+
     public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @return mixed
+     * @return null
      */
-    public function getName()
+    public function getPerson()
     {
-        return $this->name;
+        return $this->Person;
     }
 
     /**
-     * @return mixed
+     * @return null
      */
-    public function getEmail()
+    public function getConsert()
     {
-        return $this->email;
+        return $this->Consert;
     }
 
     /**
-     * @return mixed
-     */
-    public function getPhonenumber()
-    {
-        return $this->phonenumber;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getConzert()
-    {
-        return $this->conzert;
-    }
-
-    /**
-     * @return mixed
+     * @return null
      */
     public function getDiscount()
     {
-        return $this->discount;
+        return $this->Discount;
     }
 
     /**
-     * @return int
+     * @return null
      */
-    public function getPaystatus()
+    public function getStatus()
     {
-        return $this->paystatus;
+        return $this->Status;
     }
 }
 

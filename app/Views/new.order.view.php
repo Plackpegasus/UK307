@@ -22,7 +22,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <form id="create-order" action="NEWORDER" method="post">
+            <form id="create-order" action="ORDER" method="post">
                 <fieldset>
                     <legend>Eintrag erstellen</legend>
                     <div>
@@ -39,18 +39,18 @@
                     </div>
                     <div>
                         <label>Prozente:</label>
-                        <select id="prozent" name="procends" required autofocus>
-                            <?php echo getRenderdHtml(getDiscountText());?>
+                        <select id="discount" name="discount" required autofocus>
+                            <?php echo renderDiscountComboxBoxElements();?>
                         </select>
                     </div>
                     <div>
                         <label>Konzert:</label>
-                        <select id="conzertds" name="conzertds" required autofocus>
-                            <?php echo getRenderdHtml(getConzertName());?>
+                        <select id="conserts" name="conserts" required autofocus>
+                            <?php  echo renderConsertComboxBoxElements();?>
                         </select>
                     </div><br>
                     <div>
-                        <label for="time-to-pay">><b><a id="time-to-pay"></a></b></label>
+                        <label for="time-to-pay">Zahlung bis:</label><b><a id="time-to-pay"></a></b>
                         <br><input name="create" type="submit" value="Erstellen">
                     </div>
                 </fieldset>

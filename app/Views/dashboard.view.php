@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Bearbeiten</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="public/css/app.css">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
@@ -17,27 +17,34 @@
 
 </head>
 <body>
+
 <!-- Main !-->
 <div class="container">
     <div class="row">
         <div class="col">
-            <form id="create-order" action="EDIT" method="post">
-                <fieldset>
-                    <legend>Eintrag bearbeiten</legend>
-                    <table>
-                        <tr>
-                            <th scope="col">ID:</th>
-                            <th scope="col">NAME:</th>
-                            <th scope="col">EMAIL:</th>
-                            <th scope="col">TELEFON:</th>
-                            <th scope="col">KONZERT:</th>
-                            <th scope="col">Zahlungs-Status:</th>
-                            <th scope="col">BUY-DATE</th>
-                        </tr>
-                        <?php  echo renderEditTable(); ?>
-                    </table>
-                </fieldset>
-            </form>
+            <div class="container">
+                <div class="row">
+                    <a href="NEW">
+                        <div>
+                           <h3>Neuer Eintrag</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="row">
+                    <a href="EDIT">
+                        <div>
+                            <h3>Eintrag bearbeiten</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="row">
+                    <a href="VIEW">
+                        <div>
+                            <h3>Einträge Anzeigen</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
